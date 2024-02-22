@@ -5,13 +5,13 @@
 
   <changeSet id="20231212-0" author="Mina">
     <sql>
-      CREATE TABLE IF NOT EXISTS authentication.user
+      CREATE TABLE IF NOT EXISTS website_user
       (
-        id BIGSERIAL NOT NULL PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        email VARCHAR(255) NOT NULL,
-        password VARCHAR(255) NOT NULL,
-        created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+      id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      email VARCHAR(255) NOT NULL,
+      password VARCHAR(255) NOT NULL,
+      created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
       );
     </sql>
     <rollback>
@@ -21,13 +21,13 @@
 
   <changeSet id="20231212-1" author="Mina">
     <sql>
-      CREATE TABLE IF NOT EXISTS authentication.login_attempt
+      CREATE TABLE IF NOT EXISTS login_attempt
       (
-        id BIGSERIAL NOT NULL PRIMARY KEY,
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         email VARCHAR(255) NOT NULL,
         success BOOLEAN DEFAULT false,
-        created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
-        );
+        created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+      );
     </sql>
     <rollback>
       DROP TABLE authentication.login_attempt;

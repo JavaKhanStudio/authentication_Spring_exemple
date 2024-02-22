@@ -10,8 +10,8 @@ import org.springframework.util.Assert;
 public class LoginAttemptRepository {
 
   private static final int RECENT_COUNT = 10; // can be in the config
-  private static final String INSERT = "INSERT INTO authentication.login_attempt (email, success, created_at) VALUES(:email, :success, :createdAt)";
-  private static final String FIND_RECENT = "SELECT * FROM authentication.login_attempt WHERE email = :email ORDER BY created_at DESC LIMIT :recentCount";
+  private static final String INSERT = "INSERT INTO login_attempt (email, success, created_at) VALUES(?, ?, ?)";
+  private static final String FIND_RECENT = "SELECT * FROM login_attempt WHERE email = ? ORDER BY created_at DESC LIMIT ?";
 
   private final JdbcClient jdbcClient;
 
@@ -21,9 +21,9 @@ public class LoginAttemptRepository {
 
   public void add(LoginAttempt loginAttempt) {
     long affected = jdbcClient.sql(INSERT)
-        .param("email", loginAttempt.email())
-        .param("success", loginAttempt.success())
-        .param("createdAt", loginAttempt.createdAt())
+        .param(1, loginAttempt.email())
+        .param(2, loginAttempt.success())
+        .param(3, loginAttempt.createdAt())
         .update();
 
     Assert.isTrue(affected == 1, "Could not add login attempt.");
@@ -31,8 +31,8 @@ public class LoginAttemptRepository {
 
   public List<LoginAttempt> findRecent(String email) {
     return jdbcClient.sql(FIND_RECENT)
-        .param("email", email)
-        .param("recentCount", RECENT_COUNT)
+        .param(1, email)
+        .param(2, RECENT_COUNT)
         .query(LoginAttempt.class)
         .list();
   }

@@ -38,11 +38,13 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-jdbc</artifactId>
     </dependency>
-
     <dependency>
-      <groupId>org.postgresql</groupId>
-      <artifactId>postgresql</artifactId>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>runtime</scope>
+      <version>2.1.210</version> <!-- Veille version mais compatible avec DB beaver -->
     </dependency>
+
 
     <dependency>
       <groupId>org.liquibase</groupId>
